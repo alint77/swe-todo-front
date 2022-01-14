@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function board({obj}) {
 
     const publicCss='flex items-center text-white font-semibold h-8 p-2 bg-green-400 border-0 rounded-md'

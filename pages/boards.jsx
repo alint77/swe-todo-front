@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Board from "../components/boards/board";
+import Board from "../components/boards/boardCard";
+import Link from "next/link";
 
 export default function boards(props) {
   const handleAddBoard = () => {};
@@ -21,7 +22,7 @@ export default function boards(props) {
 
   useEffect(()=>{
     fetchBoards()
-  })
+  },[])
 
   const boardComponents=boards.map((v,i)=><Board key={v.board_id} obj={v}></Board>)
 
