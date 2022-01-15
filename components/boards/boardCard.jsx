@@ -4,7 +4,6 @@ import Router, { useRouter } from "next/router";
 export default function board({ obj }) {
   const router = useRouter();
   const handleDelete = async () => {
-    console.log(obj.board_id);
 
     const shouldDelete = confirm("Are you sure?");
     if(shouldDelete){
@@ -15,8 +14,6 @@ export default function board({ obj }) {
         credentials: "include",
       }
     );
-    const data = await res.status;
-    console.log(data);
     if (res.ok) {
       alert("Success");
       router.reload();
@@ -30,7 +27,7 @@ export default function board({ obj }) {
     "flex items-center text-xs text-white font-semibold h-8 p-1 bg-red-500 border-0 rounded-md mb-1";
 
   return (
-    <div className="flex justify-between items-center flex-row h-24 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">
+    <div className="flex justify-between items-center flex-row h-20 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">
       <div className="flex items-center h-full font-semibold mx-1 ">
         <Link href={`/board/${obj.board_id}`}>{obj.title}</Link>
       </div>

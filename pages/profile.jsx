@@ -77,7 +77,7 @@ export default function profile(props) {
       }
       else{
           alert(res.statusText)
-          console.log();
+          console.log(res);
       }
   };
 

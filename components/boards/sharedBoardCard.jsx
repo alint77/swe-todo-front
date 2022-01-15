@@ -12,7 +12,7 @@ export default function board({ obj }) {
 
         <div className="flex font-normal text-xs my-2">
           {/* TODO: */}
-          By: Amin Naeimi Zadeh
+          By: {obj.creator_firstname} {obj.creatpr_lastname}
         </div>
       </div>
       <div

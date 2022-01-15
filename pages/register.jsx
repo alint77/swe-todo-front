@@ -20,15 +20,14 @@ export default function login() {
   const handleSubmit =   e => {
     e.preventDefault();
 
-    if(password!==rePassword){
-        alert("passwords do not match!")
-    }
+    
 
     const user={
         fName,
         lName,
         email,
-        password
+        password,
+        rePassword
     }
     register(user)
 

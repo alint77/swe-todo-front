@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import AuthContext from "../context/AuthContext";
-import cookie from "js-cookie";
 
 export default function login() {
   const [email, setEmail] = useState("");

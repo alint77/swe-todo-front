@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 
-import cookie from 'js-cookie'
 import { useRouter } from "next/router";
 
 const AuthContext = createContext()
@@ -31,7 +30,7 @@ export const AuthProvider = ({ children }) => {
                     lastname: userInput.lName,
                     email: userInput.email,
                     password: userInput.password,
-                    password_confirm: userInput.password
+                    password_confirm: userInput.rePassword
                 })
             })
 
