@@ -23,9 +23,9 @@ export default function login() {
     <div className="w-full max-w-[28rem] m-auto">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-100 h-[28rem] w-[28rem] shadow-md rounded p-12 pb-8 mb-4"
+        className="bg-gray-100 h-[24rem] w-[28rem] shadow-md rounded p-12 pb-8 mb-4"
       >
-        <div className="titleHolder flex w-full text-3xl font-semibold mb-10">
+        <div className="titleHolder flex w-full text-3xl font-semibold mb-8">
           Login
         </div>
 
@@ -59,15 +59,12 @@ export default function login() {
           />
         </div>
 
-        <div className="flex flex-row-reverse  items-center justify-between pt-6">
+        <div className="flex flex-row-reverse  items-center justify-between py-2">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Sign In
           </button>
 
-          <label className="text-gray-500" htmlFor="remember">
-            <input className="mx-1" type="checkbox" id="remember" />
-            <span className="text-sm">remember me</span>
-          </label>
+        
         </div>
       </form>
       <div className=" text-center w-full font-semibold text-blue-800">

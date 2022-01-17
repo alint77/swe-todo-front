@@ -9,6 +9,9 @@ export default function Card({ obj }) {
   console.log(obj);
   const router = useRouter();
 
+  const [showAssignUserModal,setShowAssignUserModal]=useState(false)
+  const []
+
   const [cardIsDone, setCardIsDone] = useState(obj.is_done);
   const [cardTitle, setCardTitle] = useState(obj.title);
   const [dueDate, setDueDate] = useState(obj.due_date_time);
@@ -193,6 +196,8 @@ export default function Card({ obj }) {
           </div>
         </div>
       </Modal>
+
+      <Modal></Modal>
     </>
   );
 }

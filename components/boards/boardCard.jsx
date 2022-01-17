@@ -22,9 +22,9 @@ export default function board({ obj }) {
   };
 
   const publicCss =
-    "flex items-center text-xs text-white font-semibold h-8 p-1 bg-green-400 border-0 rounded-md mb-1";
+    "flex items-center text-xs text-white font-semibold h-8  p-1 bg-green-400 border-0 rounded-md mb-1";
   const privateCss =
-    "flex items-center text-xs text-white font-semibold h-8 p-1 bg-red-500 border-0 rounded-md mb-1";
+    "flex items-center text-xs text-white font-semibold h-8  p-1 bg-red-500 border-0 rounded-md mb-1";
 
   return (
     <div className="flex justify-between items-center flex-row h-20 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">
@@ -32,12 +32,12 @@ export default function board({ obj }) {
         <Link href={`/board/${obj.board_id}`}>{obj.title}</Link>
       </div>
 
-      <div>
+      <div className="w-12">
         <div className={obj.is_private ? privateCss : publicCss}>
           {obj.is_private ? "Private" : "Public"}
         </div>
         <div
-          className="flex items-center text-xs  font-semibold h-8 p-1 bg-orange-200 border-0 rounded-md cursor-pointer "
+          className="flex items-center text-xs  font-semibold h-8 w-12 text-center p-1 bg-orange-200 border-0 rounded-md cursor-pointer "
           onClick={() => handleDelete()}
         >
           Delete

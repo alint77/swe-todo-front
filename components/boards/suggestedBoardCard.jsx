@@ -1,6 +1,10 @@
 import Link from "next/link";
+import Router, { useRouter } from "next/router";
 
 export default function board({ obj }) {
+
+  const router = useRouter()
+
   const handleJoin = async () => {
     const confirmJoin = confirm("Press OK to confirm");
     if (confirmJoin) {
@@ -20,9 +24,9 @@ export default function board({ obj }) {
   };
 
   return (
-    <div className="flex justify-between items-center flex-row h-24 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">
+    <div className="flex justify-between items-center flex-row h-20 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">
       <div className="flex flex-col h-full font-semibold mx-1 ">
-        <div className="mt-4">
+        <div className="mt-2">
           <div>{obj.title}</div>
         </div>
 
