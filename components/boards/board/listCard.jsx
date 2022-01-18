@@ -8,7 +8,6 @@ import { route } from "next/dist/server/router";
 
 export default function List(props) {
 
-  console.log(props,'props');
 
 
   const[listTitle,setListTitle]=useState(props.obj.title)
@@ -107,7 +106,7 @@ export default function List(props) {
   };
 
   const cardsComps = props.obj.cards.map((v, i) => (
-    <Card obj={v} key={v.card_id}  ></Card>
+    <Card boardmembers={props.boardmembers} obj={v} key={v.card_id}  ></Card>
   ));
 
   return (

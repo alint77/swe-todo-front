@@ -11,7 +11,7 @@ export default function login() {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [rePassword,setRePassword] = useState('');
-  const{register,error}=useContext(AuthContext)
+  const{register,user,error}=useContext(AuthContext)
 
   const router = useRouter()
 
@@ -19,9 +19,6 @@ export default function login() {
 
   const handleSubmit =   e => {
     e.preventDefault();
-
-    
-
     const user={
         fName,
         lName,
@@ -30,12 +27,9 @@ export default function login() {
         rePassword
     }
     register(user)
-
-
   }
 
-  
-
+  if(user) router.push('/boards')
   return (
     <div className="w-full max-w-[28rem] m-auto">
 
@@ -80,10 +74,6 @@ export default function login() {
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Sign Up
           </button>
-
-          
-
-          
         </div>
       </form>
       <div className=' text-center w-full font-semibold text-blue-800'>

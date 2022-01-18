@@ -1,16 +1,46 @@
-import { route } from "next/dist/server/router";
 import { useRouter } from "next/router";
 
 import { useState } from "react";
 
 import Modal from "../../../modal";
 
-export default function Card({ obj }) {
-  console.log(obj);
+export default function Card({ obj, boardmembers }) {
   const router = useRouter();
 
-  const [showAssignUserModal,setShowAssignUserModal]=useState(false)
-  const []
+  const [assignedUsers, setAssignedUsers] = useState(obj.assignedUsers);
+  const [showAssignUserModal, setShowAssignUserModal] = useState(false);
+
+  const l = boardmembers.filter((v) => {
+    if (assignedUsers.find((e) => e.id == v.user_id)) return;
+    return v;
+  });
+
+  const handleAssignUser = async (userId) => {
+    console.log(userId);
+    const res = await fetch("http://localhost:4000/api/cards/assign", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        card_id: obj.card_id,
+        user_id: userId,
+      }),
+    });
+    if(res.ok){
+      alert('success')
+      router.reload()
+    }
+    else{
+      alert('Something went wrong. status:',res.status)
+    }
+  };
+
+  const handleCloseAssignUserModal = () => {
+    setShowAssignUserModal(false);
+    setShowCardModal(true);
+  };
 
   const [cardIsDone, setCardIsDone] = useState(obj.is_done);
   const [cardTitle, setCardTitle] = useState(obj.title);
@@ -67,7 +97,7 @@ export default function Card({ obj }) {
     }
   };
 
-  const membersList = obj.assignedUsers.map((v, i) => (
+  const membersList = assignedUsers.map((v, i) => (
     <div
       className="flex text-white font-bold justify-center w-5 h-5 items-center text-xs bg-black rounded-full cursor-pointer mr-1"
       key={i}
@@ -77,7 +107,7 @@ export default function Card({ obj }) {
     </div>
   ));
 
-  const membersListInModal = obj.assignedUsers.map((v, i) => (
+  const membersListInModal = assignedUsers.map((v, i) => (
     <div
       className="flex text-white font-bold justify-center w-8 h-8 items-center text-sm bg-black rounded-full cursor-pointer mr-1"
       key={i}
@@ -139,7 +169,7 @@ export default function Card({ obj }) {
               />
               {!isExpired && (
                 <input
-                  className="ml-2"
+                  className="ml-1"
                   checked={cardIsDone}
                   onChange={() =>
                     cardIsDone ? setCardIsDone(false) : setCardIsDone(true)
@@ -151,7 +181,7 @@ export default function Card({ obj }) {
 
             <div
               className={
-                "createDate  flex items-center rounded px-2 py-px text-sm " +
+                "createDate  flex items-center rounded px-1 py-px text-sm " +
                 (isExpired
                   ? " bg-red-500 text-white"
                   : cardIsDone
@@ -172,7 +202,14 @@ export default function Card({ obj }) {
         <div className="flex flex-col  items-center">
           <div className="flex justify-between items-center w-full h-10 ">
             <div className="pl-4 font-medium "> Members :</div>
-            <div className="pr-4 font-medium text-xs text-gray-600">
+            <div
+              className="pr-4 font-medium text-xs text-gray-600 cursor-pointer"
+              onClick={() => {
+                setShowAssignUserModal(true);
+                setShowCardModal(false);
+                console.log(assignedUsers);
+              }}
+            >
               + Assign User
             </div>
           </div>
@@ -197,7 +234,40 @@ export default function Card({ obj }) {
         </div>
       </Modal>
 
-      <Modal></Modal>
+      <Modal
+        isOpen={showAssignUserModal}
+        setIsOpen={handleCloseAssignUserModal}
+        title="Assign User To Card :"
+      >
+        <div className="pb-6">
+
+          
+
+          {l.map((v, i) => {
+            return (
+              <div
+                key={i}
+                className="flex flex-row justify-between mx-12 h-12  bg-gray-200 mt-4 shadow-md rounded "
+              >
+                <div className="flex flex-row items-center">
+                  <div className=" flex flex-row items-center justify-center mx-2 bg-black h-8 w-8 text-white font-semibold text-lg rounded-full  ">
+                    {v.firstname.substring(0, 1).toUpperCase()}
+                  </div>
+                  <div>
+                    {v.firstname} {v.lastname}
+                  </div>
+                </div>
+                <div
+                  className="flex items-center bg-green-500 rounded px-2 my-2 mr-2 text-white font-medium text-sm cursor-pointer"
+                  onClick={() => handleAssignUser(v.user_id)}
+                >
+                  Add
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Modal>
     </>
   );
 }

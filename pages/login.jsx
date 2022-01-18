@@ -19,6 +19,8 @@ export default function login() {
     login({ email, password });
   };
 
+  if(user) router.push('/boards')
+
   return (
     <div className="w-full max-w-[28rem] m-auto">
       <form

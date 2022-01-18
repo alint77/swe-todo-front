@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
+import  { useRouter } from "next/router";
 import Modal from "../components/modal";
 
-export default function profile(props) {
+export default function profile() {
   const [currPass, setCurrPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
@@ -68,7 +68,6 @@ export default function profile(props) {
               lastname:lastNameInput
           })
       })
-
       const data = await res.json()
       console.log(data);
       if(res.ok){

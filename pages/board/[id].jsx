@@ -3,18 +3,20 @@ import { useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import List from "../../components/boards/board/listCard";
 import Modal from "../../components/modal";
+import FriendCardAddToBoard from "../../components/friends/friendCard";
 
 export default function boardPage(props) {
-
-  
-  
+  const [showAddUserToBoardModal, setShowAddUserToBoardModal] = useState(false);
+  const handleAddMemberBtn = () => {
+    fetchFriendsList();
+    setShowAddUserToBoardModal(true);
+  }
 
   const [isLoading, setIsLoading] = useState(true);
   const [board, setBoard] = useState({});
-  const [lists,setLists]=useState([])
+  const [lists, setLists] = useState([]);
   const [members, setMembers] = useState([]);
   const router = useRouter();
-
 
   const [newListTitle, setNewListTitle] = useState("");
   const [showNewListModal, setShowNewListModal] = useState(false);
@@ -23,7 +25,6 @@ export default function boardPage(props) {
     setNewListTitle("");
     setShowNewListModal(false);
   };
-
 
   const handleNewList = async () => {
     const res = await fetch("http://localhost:4000/api/boards/lists", {
@@ -50,10 +51,6 @@ export default function boardPage(props) {
     }
   };
 
-
-
-
-
   const fetchBoard = async () => {
     setIsLoading(true);
 
@@ -77,7 +74,7 @@ export default function boardPage(props) {
   };
 
   const fetchLists = async () => {
-    if(!board.board_id) return
+    if (!board.board_id) return;
     const res = await fetch(
       `http://localhost:4000/api/cards?board=${board.board_id}`,
       {
@@ -86,13 +83,10 @@ export default function boardPage(props) {
       }
     );
     const data = await res.json();
-    
+
     if (res.ok) {
-      setLists(data)
-    }
-    else(
-      console.log(res.statusText)
-    )
+      setLists(data);
+    } else console.log(res.statusText);
   };
 
   const visibilityCss = board.is_private
@@ -101,11 +95,11 @@ export default function boardPage(props) {
 
   const membersList = members.map((v, i) => (
     <div
-      className="flex text-white font-bold justify-center w-7 h-7 items-center text-lg bg-black rounded-full cursor-pointer mx-1"
+      className="flex text-white font-bold justify-center w-7 h-7 items-center text-md bg-black rounded-full cursor-pointer mx-1"
       key={i}
       title={v.firstname + " " + v.lastname}
     >
-      {v.firstname.substring(0, 1)}
+      {v.firstname.substring(0, 1).toUpperCase()}
     </div>
   ));
 
@@ -117,9 +111,9 @@ export default function boardPage(props) {
     fetchLists();
   }, [board]);
 
-  const listsComps = lists.map((v)=>{
-    return <List obj={v} key={v.list_id} ></List>
-  })
+  const listsComps = lists.map((v) => {
+    return <List boardmembers={members} obj={v} key={v.list_id}></List>;
+  });
 
   if (isLoading) return <div>loading...</div>;
   return (
@@ -135,13 +129,7 @@ export default function boardPage(props) {
 
           <div className="flex flex-row">
             <div className="memebersAndAdd flex flex-row-reverse border-0 mr-4">
-              <div
-                className="addMemberBtn flex text-white font-bold justify-center w-7 h-7 items-center text-lg bg-black rounded-full cursor-pointer"
-                title="Add Member"
-                onClick={() => handleAddMember()}
-              >
-                +
-              </div>
+             
               <div className="members flex flex-row">{membersList}</div>
             </div>
 
@@ -161,8 +149,12 @@ export default function boardPage(props) {
         </div>
       </div>
 
-      <Modal isOpen={showNewListModal} setIsOpen={handleCloseNewListModal} title='Create List' >
-      <div className="p-4">
+      <Modal
+        isOpen={showNewListModal}
+        setIsOpen={handleCloseNewListModal}
+        title="Create List"
+      >
+        <div className="p-4">
           <label
             className="block text-gray-700 text-sm my-2"
             htmlFor="listTitle"
@@ -178,8 +170,6 @@ export default function boardPage(props) {
             type="text"
             placeholder="List Title"
           />
-
-          
         </div>
         <div className="flex flex-row-reverse items-center border-t-2 h-12">
           <div
@@ -190,12 +180,8 @@ export default function boardPage(props) {
           </div>
         </div>
       </Modal>
+
       
-
-
-
-
-
     </>
   );
 }
