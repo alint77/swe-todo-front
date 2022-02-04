@@ -6,10 +6,13 @@ export default function FriendsTab({ obj }) {
   const [friendsList, setFriendsList] = useState([]);
 
   const handleFetchFriendsList = async () => {
-    const res = await fetch("http://localhost:4000/api/users/firends", {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/firends`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     const data = await res.json();
     if (res.ok) {
       setIsLoading(false);
@@ -33,8 +36,6 @@ export default function FriendsTab({ obj }) {
       <div className="flex flex-row flex-wrap justify-evenly align-middle py-8 px-3">
         {friendsListComps}
       </div>
-
-      
     </>
   );
 }

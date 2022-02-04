@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Link from "next/link";
-import  { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Modal from "../components/modal";
+import PleaseLoginPage from "../components/pleaseLoginPage";
 
 export default function profile() {
   const [currPass, setCurrPass] = useState("");
@@ -21,7 +22,7 @@ export default function profile() {
       alert(`Passwords don't match`);
     } else {
       const res = await fetch(
-        "http://localhost:4000/api/users/changePassword",
+        `${process.env.NEXT_PUBLIC_API_URL}/users/changePassword`,
         {
           method: "PATCH",
           credentials: "include",
@@ -57,41 +58,34 @@ export default function profile() {
   };
 
   const handleEditProfile = async () => {
-      const res =  await fetch('http://localhost:4000/api/users',{
-          method:'PATCH',
-          credentials:'include',
-          headers:{
-              'Content-Type':'application/json',
-          },
-          body:JSON.stringify({
-              firstname:firstNameInput,
-              lastname:lastNameInput
-          })
-      })
-      const data = await res.json()
-      console.log(data);
-      if(res.ok){
-          alert('success')
-          router.reload()
-      }
-      else{
-          alert(res.statusText)
-          console.log(res);
-      }
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname: firstNameInput,
+        lastname: lastNameInput,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (res.ok) {
+      alert("success");
+      router.reload();
+    } else {
+      alert(res.statusText);
+      console.log(res);
+    }
   };
 
   const router = useRouter();
 
   const { user, error } = useContext(AuthContext);
 
-  if (!user)
-    return (
-      <div className="flex flex-col  w-3/4  mx-auto mt-24 h-[36rem]">
-        please login: <Link href="/login">login</Link>
-      </div>
-    );
   return (
-    <div className="flex flex-col  w-3/4  mx-auto mt-24 h-[36rem]">
+    <div className="flex flex-col  w-5/6  mx-auto mt-24 h-[36rem]">
       <div className="flex flex-row justify-between border-b-2 p-2">
         <div className=" font-semibold text-lg">My Profile</div>
         <div className="">
@@ -218,8 +212,6 @@ export default function profile() {
             type="text"
             placeholder={user.lastname}
           />
-
-          
         </div>
         <div className="flex flex-row-reverse items-center border-t-2 h-12">
           <div

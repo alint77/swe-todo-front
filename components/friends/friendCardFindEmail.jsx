@@ -5,7 +5,7 @@ export default function FriendCardFindEmail({ obj }) {
 
   const handleRequest = async () => {
     const res = await fetch(
-      `http://localhost:4000/api/users/firends/${obj.user_id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/users/firends/${obj.user_id}`,
       {
         method: "POST",
         credentials: "include",
@@ -14,7 +14,7 @@ export default function FriendCardFindEmail({ obj }) {
     if (res.ok) {
       alert("success");
     } else {
-      alert("Something went wrong! status:",res.status);
+      alert("Something went wrong! status:", res.status);
     }
   };
 

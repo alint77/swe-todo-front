@@ -7,7 +7,7 @@ export default function FriendRequestsTab() {
 
   const handleFetchFriendRequestsList = async () => {
     const res = await fetch(
-      "http://localhost:4000/api/users/firends/requests",
+      `${process.env.NEXT_PUBLIC_API_URL}/users/firends/requests`,
       {
         method: "GET",
         credentials: "include",

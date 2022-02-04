@@ -17,7 +17,7 @@ export default function Card({ obj, boardmembers }) {
 
   const handleAssignUser = async (userId) => {
     console.log(userId);
-    const res = await fetch("http://localhost:4000/api/cards/assign", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cards/assign`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -28,12 +28,11 @@ export default function Card({ obj, boardmembers }) {
         user_id: userId,
       }),
     });
-    if(res.ok){
-      alert('success')
-      router.reload()
-    }
-    else{
-      alert('Something went wrong. status:',res.status)
+    if (res.ok) {
+      alert("success");
+      router.reload();
+    } else {
+      alert("Something went wrong. status:", res.status);
     }
   };
 
@@ -58,18 +57,21 @@ export default function Card({ obj, boardmembers }) {
       return setShowCardModal(false);
     }
 
-    const res = await fetch(`http://localhost:4000/api/cards/${obj.card_id}`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: cardTitle,
-        is_done: cardIsDone,
-        due_date_time: dueDate,
-      }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/cards/${obj.card_id}`,
+      {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: cardTitle,
+          is_done: cardIsDone,
+          due_date_time: dueDate,
+        }),
+      }
+    );
 
     if (res.ok) {
       alert("success");
@@ -84,7 +86,7 @@ export default function Card({ obj, boardmembers }) {
     const shouldDelete = confirm("Are you sure?");
     if (shouldDelete) {
       const res = await fetch(
-        `http://localhost:4000/api/cards/${obj.card_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/cards/${obj.card_id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -240,9 +242,6 @@ export default function Card({ obj, boardmembers }) {
         title="Assign User To Card :"
       >
         <div className="pb-6">
-
-          
-
           {l.map((v, i) => {
             return (
               <div

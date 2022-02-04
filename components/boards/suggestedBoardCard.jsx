@@ -2,14 +2,13 @@ import Link from "next/link";
 import Router, { useRouter } from "next/router";
 
 export default function board({ obj }) {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const handleJoin = async () => {
     const confirmJoin = confirm("Press OK to confirm");
     if (confirmJoin) {
       const res = await fetch(
-        `http://localhost:4000/api/boards/join/${obj.board_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/boards/join/${obj.board_id}`,
         {
           method: "POST",
           credentials: "include",

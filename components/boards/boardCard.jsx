@@ -4,20 +4,19 @@ import Router, { useRouter } from "next/router";
 export default function board({ obj }) {
   const router = useRouter();
   const handleDelete = async () => {
-
     const shouldDelete = confirm("Are you sure?");
-    if(shouldDelete){
-    const res = await fetch(
-      `http://localhost:4000/api/boards/${obj.board_id}`,
-      {
-        method: "DELETE",
-        credentials: "include",
+    if (shouldDelete) {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/boards/${obj.board_id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (res.ok) {
+        alert("Success");
+        router.reload();
       }
-    );
-    if (res.ok) {
-      alert("Success");
-      router.reload();
-    }
     }
   };
 

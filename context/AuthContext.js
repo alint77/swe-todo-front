@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     //Register
     const register = async (userInput) => {
 
-        const res = await fetch('http://localhost:4000/api/auth/signup',
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
             {
                 method: 'POST',
                 credentials: 'include',
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     //Login
     const login = async ({ email, password }) => {
 
-        const res = await fetch('http://localhost:4000/api/auth/signin',
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
             {
                 method: 'POST',
                 credentials: 'include',
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     }
     //Logout
     const logout = async () => {
-        const res = await fetch('http://localhost:4000/api/auth/signout', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signout`, {
             method: 'POST',
             credentials: 'include'
         })
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
     //Check
 
     const checkUserLoggedIn = async () => {
-        const res = await fetch('http://localhost:4000/api/auth/whoami', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/whoami`, {
             method: 'GET',
             credentials: 'include'
         })

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState,useContext } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import Board from "../components/boards/boardCard";
 import SharedBoard from "../components/boards/sharedBoardCard";
 import SuggestedBoard from "../components/boards/suggestedBoardCard";
@@ -15,10 +15,7 @@ export default function boards(props) {
   const [newBoardTitle, setNewBoardTitle] = useState("");
   const newBoardPrivateCheckRef = useRef();
   const router = useRouter();
-  const {user} = useContext(AuthContext)
-
- 
-
+  const { user } = useContext(AuthContext);
 
   const handleAddBtn = () => {
     addBoardModalFlag
@@ -28,7 +25,7 @@ export default function boards(props) {
 
   const handleAddBoard = async () => {
     const is_private = newBoardPrivateCheckRef.current.checked;
-    const res = await fetch("http://localhost:4000/api/boards", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/boards`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -49,42 +46,50 @@ export default function boards(props) {
   };
 
   const fetchBoards = async () => {
-    const resCreated = await fetch("http://localhost:4000/api/boards/created", {
-      method: "GET",
-      credentials: "include",
-    });
-    const resShared = await fetch("http://localhost:4000/api/boards/joined", {
-      method: "GET",
-      credentials: "include",
-    });
-    const resSuggested = await fetch("http://localhost:4000/api/boards/suggested", {
-      method: "GET",
-      credentials: "include",
-    });
-    
-
-
+    const resCreated = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/boards/created`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const resShared = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/boards/joined`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const resSuggested = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/boards/suggested`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
 
     const dataCreated = await resCreated.json();
     const dataShared = await resShared.json();
     const dataSuggested = await resSuggested.json();
 
-    if (resCreated.ok && resShared.ok && resSuggested.ok ){
-      setBoards(dataCreated)
-      setSharedBoards(dataShared)
-      console.log(dataShared,'shared');
-      setSuggestedBoards(dataSuggested)
-      console.log(dataSuggested,'suggested');
-
-    }
-    else console.log(resCreated.status,resShared.status,resSuggested.status,'createdError,sharedError,suggestedError');
+    if (resCreated.ok && resShared.ok && resSuggested.ok) {
+      setBoards(dataCreated);
+      setSharedBoards(dataShared);
+      console.log(dataShared, "shared");
+      setSuggestedBoards(dataSuggested);
+      console.log(dataSuggested, "suggested");
+    } else
+      console.log(
+        resCreated.status,
+        resShared.status,
+        resSuggested.status,
+        "createdError,sharedError,suggestedError"
+      );
   };
 
   useEffect(() => {
     fetchBoards();
   }, []);
-
-  
 
   const boardComponents = boards.map((v, i) => (
     <Board key={v.board_id} obj={v}></Board>
@@ -97,14 +102,12 @@ export default function boards(props) {
     <SuggestedBoard key={v.board_id} obj={v}></SuggestedBoard>
   ));
 
-
-
   if (!user)
-  return (
-    <div className="flex flex-col  w-3/4  mx-auto mt-24 h-[36rem]">
-      please login: <Link href="/login">login</Link>
-    </div>
-  );
+    return (
+      <div className="flex flex-col  w-3/4  mx-auto mt-24 h-[36rem]">
+        please login: <Link href="/login">login</Link>
+      </div>
+    );
   return (
     <div className="flex flex-col w-5/6 mx-auto mt-24">
       <div className="flex flex-row justify-between border-b-2 p-2">

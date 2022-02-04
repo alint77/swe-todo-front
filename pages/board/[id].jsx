@@ -10,7 +10,7 @@ export default function boardPage(props) {
   const handleAddMemberBtn = () => {
     fetchFriendsList();
     setShowAddUserToBoardModal(true);
-  }
+  };
 
   const [isLoading, setIsLoading] = useState(true);
   const [board, setBoard] = useState({});
@@ -27,7 +27,7 @@ export default function boardPage(props) {
   };
 
   const handleNewList = async () => {
-    const res = await fetch("http://localhost:4000/api/boards/lists", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/boards/lists`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -55,7 +55,7 @@ export default function boardPage(props) {
     setIsLoading(true);
 
     const res = await fetch(
-      `http://localhost:4000/api/boards/${router.query.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/boards/${router.query.id}`,
       {
         method: "GET",
         credentials: "include",
@@ -76,7 +76,7 @@ export default function boardPage(props) {
   const fetchLists = async () => {
     if (!board.board_id) return;
     const res = await fetch(
-      `http://localhost:4000/api/cards?board=${board.board_id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/cards?board=${board.board_id}`,
       {
         method: "GET",
         credentials: "include",
@@ -129,7 +129,6 @@ export default function boardPage(props) {
 
           <div className="flex flex-row">
             <div className="memebersAndAdd flex flex-row-reverse border-0 mr-4">
-             
               <div className="members flex flex-row">{membersList}</div>
             </div>
 
@@ -180,8 +179,6 @@ export default function boardPage(props) {
           </div>
         </div>
       </Modal>
-
-      
     </>
   );
 }

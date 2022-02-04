@@ -13,8 +13,7 @@ export default function friends(props) {
   const { user } = useContext(AuthContext);
   const [currTab, setCurrTab] = useState(0);
 
-
-  const [foundUserObj,setFoundUserObj]=useState(undefined)
+  const [foundUserObj, setFoundUserObj] = useState(undefined);
   const [showFindPersonModal, setShowFindPersonModal] = useState(false);
   const [findPersonModalEmailInput, setFindPersonModalEmailInput] =
     useState("");
@@ -25,18 +24,21 @@ export default function friends(props) {
   };
 
   const handleFindFriendBtn = async () => {
-    const res = await fetch('http://localhost:4000/api/users?email='+findPersonModalEmailInput,{
-      credentials:'include'
-    })
-    const data = await res.json()
-    if(res.ok){
-      setFoundUserObj(data)
-
-    }else{
-      setFoundUserObj(undefined)
-      alert('Could Not Find User')
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users?email=` +
+        findPersonModalEmailInput,
+      {
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    if (res.ok) {
+      setFoundUserObj(data);
+    } else {
+      setFoundUserObj(undefined);
+      alert("Could Not Find User");
     }
-  }
+  };
 
   const activeTabCss =
     "w-1/2 border-b-2  border-black text-center h-10 cursor-pointer px-2";
@@ -84,7 +86,11 @@ export default function friends(props) {
         </div>
 
         <div className=" min-h-[400px] ">
-          {currTab == 0 ? <FriendsTab></FriendsTab> : <FriendRequestsTab></FriendRequestsTab>}
+          {currTab == 0 ? (
+            <FriendsTab></FriendsTab>
+          ) : (
+            <FriendRequestsTab></FriendRequestsTab>
+          )}
         </div>
       </div>
 
@@ -107,10 +113,17 @@ export default function friends(props) {
               type="email"
               placeholder="User Email"
             />
-            <div className="flex bg-red-500 text-sm items-center ml-2 px-1 rounded font-medium text-white cursor-pointer" onClick={()=>handleFindFriendBtn()} >Find</div>
+            <div
+              className="flex bg-red-500 text-sm items-center ml-2 px-1 rounded font-medium text-white cursor-pointer"
+              onClick={() => handleFindFriendBtn()}
+            >
+              Find
+            </div>
           </div>
           <div className="flex justify-center align-middle my-auto item-center w-full ">
-            {foundUserObj && <FriendCardFindEmail obj={foundUserObj}></FriendCardFindEmail>}
+            {foundUserObj && (
+              <FriendCardFindEmail obj={foundUserObj}></FriendCardFindEmail>
+            )}
           </div>
         </div>
         <div className="flex flex-row-reverse items-center border-t-2 h-12">

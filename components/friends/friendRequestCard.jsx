@@ -1,17 +1,17 @@
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 
-export default function FriendRequestCard({obj}) {
+export default function FriendRequestCard({ obj }) {
   const capitalizeFirstLetter = (s) => s && s[0].toUpperCase() + s.slice(1);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleAccept = async () => {
     const confirmA = confirm("Are you sure?");
 
     if (confirmA) {
       const res = await fetch(
-        `http://localhost:4000/api/users/firends/accept/${obj.requested_user_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/firends/accept/${obj.requested_user_id}`,
         {
           method: "PATCH",
           credentials: "include",
@@ -19,7 +19,7 @@ export default function FriendRequestCard({obj}) {
       );
       if (res.ok) {
         alert("success");
-        router.reload()
+        router.reload();
       } else {
         alert("Something went wrong! status:", res.status);
       }
@@ -28,10 +28,9 @@ export default function FriendRequestCard({obj}) {
   const handleReject = async () => {
     const confirmR = confirm("Are you sure?");
 
-
     if (confirmR) {
       const res = await fetch(
-        `http://localhost:4000/api/users/firends/reject/${obj.requested_user_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/firends/reject/${obj.requested_user_id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -39,8 +38,7 @@ export default function FriendRequestCard({obj}) {
       );
       if (res.ok) {
         alert("success");
-        router.reload()
-        
+        router.reload();
       } else {
         alert("Something went wrong! status:", res.status);
       }

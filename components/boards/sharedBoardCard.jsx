@@ -1,7 +1,24 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function board({ obj }) {
-  const handleLeave = () => {};
+  const router = useRouter();
+  const handleLeave = async () => {
+    const cnf = confirm("Are you sure ?");
+    if (!cnf) return;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/boards/leave/${obj.board_id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (res.ok) alert("success");
+    else alert("error!");
+
+    router.reload();
+  };
 
   return (
     <div className="flex justify-between items-center flex-row h-20 my-4 mx-1 bg-gray-200 p-2 shadow-lg border-0 rounded-md">

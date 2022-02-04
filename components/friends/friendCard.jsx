@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from "../../config/apiRoute";
 
 export default function FriendCard({ obj }) {
   const capitalizeFirstLetter = (s) => s && s[0].toUpperCase() + s.slice(1);
@@ -8,7 +9,7 @@ export default function FriendCard({ obj }) {
 
     if (confirmDelete) {
       const res = await fetch(
-        `http://localhost:4000/api/users/firends/${obj.friend_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/firends/${obj.friend_id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -17,7 +18,7 @@ export default function FriendCard({ obj }) {
       if (res.ok) {
         alert("success");
       } else {
-        alert('Something went wrong! status:',res.status)
+        alert("Something went wrong! status:", res.status);
       }
     }
   };

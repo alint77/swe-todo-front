@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useContext } from "react"
 import AuthContext from "../../context/AuthContext"
 import {useRouter} from "next/router"
+import PleaseLoginPage from "../pleaseLoginPage"
 
 export default function layout(props) {
 
@@ -76,8 +77,8 @@ export default function layout(props) {
                     
                 </div>
             </div>
-            <div className=" border-2 flex  w-screen overflow-scroll">
-                {props.children}
+            <div className=" border-2 flex w-screen overflow-scroll">
+                {!user&&!router.pathname.includes('login')&&!router.pathname.includes('register') ? <PleaseLoginPage/> : props.children}
 
             </div>
 
