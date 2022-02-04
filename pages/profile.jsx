@@ -58,6 +58,7 @@ export default function profile() {
   };
 
   const handleEditProfile = async () => {
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
       method: "PATCH",
       credentials: "include",
@@ -65,8 +66,8 @@ export default function profile() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstname: firstNameInput,
-        lastname: lastNameInput,
+        firstname: user.firstname && firstNameInput,
+        lastname: user.lastname && lastNameInput,
       }),
     });
     const data = await res.json();

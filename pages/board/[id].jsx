@@ -141,7 +141,7 @@ export default function boardPage(props) {
           </div>
         </div>
 
-        <div className="align-top shrink-0 border-2 p-4 overflow-scroll min-h-[600px]">
+        <div className="align-top shrink-0 p-4 overflow-scroll min-h-[600px]">
           <div className=" w-fit flex flex-row justify-evenly align-top">
             {listsComps}
           </div>

@@ -189,6 +189,7 @@ export default function Card({ obj, boardmembers }) {
                   : cardIsDone
                   ? "bg-green-300"
                   : "bg-orange-200")
+                + (dueDate && ' hidden')
               }
             >
               {sth}/{st}

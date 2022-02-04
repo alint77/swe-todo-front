@@ -1,7 +1,9 @@
 import React from "react";
 import { API_URL } from "../../config/apiRoute";
+import { useRouter } from "next/router";
 
 export default function FriendCard({ obj }) {
+  const router = useRouter()
   const capitalizeFirstLetter = (s) => s && s[0].toUpperCase() + s.slice(1);
 
   const handleUnfriend = async () => {
@@ -17,6 +19,8 @@ export default function FriendCard({ obj }) {
       );
       if (res.ok) {
         alert("success");
+        router.reload()
+        
       } else {
         alert("Something went wrong! status:", res.status);
       }
