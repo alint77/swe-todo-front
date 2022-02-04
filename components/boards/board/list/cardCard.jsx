@@ -44,6 +44,9 @@ export default function Card({ obj, boardmembers }) {
   const [cardIsDone, setCardIsDone] = useState(obj.is_done);
   const [cardTitle, setCardTitle] = useState(obj.title);
   const [dueDate, setDueDate] = useState(obj.due_date_time);
+
+  console.log(dueDate);
+
   const [showCardModal, setShowCardModal] = useState(false);
 
   const isExpired = dueDate >= Date.now() ? true : false;
@@ -126,10 +129,12 @@ export default function Card({ obj, boardmembers }) {
   );
 
   const createDate = new Date(obj.create_date_time).toUTCString();
-
+  
+  if(obj.due_date_time) {
   const date = new Date(obj.due_date_time);
   const sth = date.getMonth() + 1;
   const st = date.getDate();
+  }
 
   return (
     <>
@@ -147,9 +152,13 @@ export default function Card({ obj, boardmembers }) {
                 : obj.is_done
                 ? "bg-green-300"
                 : "bg-orange-200")
+              +
+              (!obj.due_date_time ? ' hidden': '')
+              
+    
             }
           >
-            {sth}/{st}
+            {obj.due_date_time ? `${sth}/${st}` : '' } 
           </div>
         </div>
         <div className="cardTitle text-sm font-medium mt-2">{obj.title}</div>
@@ -189,10 +198,12 @@ export default function Card({ obj, boardmembers }) {
                   : cardIsDone
                   ? "bg-green-300"
                   : "bg-orange-200")
-                + (dueDate && ' hidden')
+                + 
+                (!obj.due_date_time ? ' hidden': '')
+
               }
             >
-              {sth}/{st}
+            {obj.due_date_time ? `${sth}/${st}` : '' } 
             </div>
           </div>
           <div className="border-b-2 min-h-[4rem]">
