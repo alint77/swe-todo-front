@@ -1,8 +1,10 @@
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 export default function board({ obj }) {
   const router = useRouter();
+
+
   const handleDelete = async () => {
     const shouldDelete = confirm("Are you sure?");
     if (shouldDelete) {
@@ -12,13 +14,15 @@ export default function board({ obj }) {
           method: "DELETE",
           credentials: "include",
         }
-      );
+      )
+
       if (res.ok) {
         alert("Success");
         router.reload();
       }
     }
   };
+
 
   const publicCss =
     "flex items-center text-xs text-white font-semibold h-8  p-1 bg-green-400 border-0 rounded-md mb-1";

@@ -203,7 +203,7 @@ export default function Card({ obj, boardmembers }) {
 
               }
             >
-            {obj.due_date_time ? `${sth}/${st}` : '' } 
+            {obj.due_date_time ? `${sth}/${st}` : ' ' } 
             </div>
           </div>
           <div className="border-b-2 min-h-[4rem]">

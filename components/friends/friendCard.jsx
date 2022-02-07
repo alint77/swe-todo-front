@@ -1,5 +1,4 @@
 import React from "react";
-import { API_URL } from "../../config/apiRoute";
 import { useRouter } from "next/router";
 
 export default function FriendCard({ obj }) {
